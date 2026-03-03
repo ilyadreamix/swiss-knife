@@ -1,4 +1,4 @@
-package io.github.ilyadreamix.swissknife.bottomsheet
+package io.gitlab.ilyadreamix.swissknife.bottomsheet
 
 import android.app.Dialog
 import android.graphics.Color
@@ -21,7 +21,6 @@ import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 @Composable
 internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
-
   val context = LocalContext.current
   val lifecycleOwner = LocalLifecycleOwner.current
   val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -62,7 +61,7 @@ internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
     }
   }
 
-  DisposableEffect(dialog, composeView) {
+  DisposableEffect(Unit) {
     dialog.setContentView(composeView)
     dialog.show()
 

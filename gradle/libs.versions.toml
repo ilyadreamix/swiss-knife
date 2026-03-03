@@ -1,8 +1,9 @@
 [versions]
-android-gradle = "9.0.0"
+android-gradle = "9.1.0"
 kotlin = "2.3.10"
 androidx-core = "1.17.0"
 androidx-activity-compose = "1.12.4"
+androidx-lifecycle = "2.10.0"
 app-android-sdk-compile = "36"
 app-android-sdk-min = "28"
 app-android-sdk-target = "36"
@@ -11,8 +12,9 @@ compose = "1.10.1"
 [libraries]
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
+androidx-lifecycle-viewModel = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidx-lifecycle" }
 compose-ui-library = { module = "org.jetbrains.compose.ui:ui", version.ref = "compose" }
-compose-foundation = { module = "org.jetbrains.compose.foundation:foundation" }
+compose-foundation = { module = "org.jetbrains.compose.foundation:foundation", version.ref = "compose" }
 compose-runtime = { module = "org.jetbrains.compose.runtime:runtime", version.ref = "compose" }
 compose-ui-tooling-library = { module = "org.jetbrains.compose.ui:ui-tooling", version.ref = "compose" }
 compose-ui-tooling-preview = { module = "org.jetbrains.compose.ui:ui-tooling-preview", version.ref = "compose" }

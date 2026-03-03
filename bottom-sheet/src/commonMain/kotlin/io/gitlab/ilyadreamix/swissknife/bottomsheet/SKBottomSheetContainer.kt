@@ -1,4 +1,4 @@
-package io.github.ilyadreamix.swissknife.bottomsheet
+package io.gitlab.ilyadreamix.swissknife.bottomsheet
 
 import androidx.compose.runtime.Composable
 
