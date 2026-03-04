@@ -24,3 +24,4 @@ dependencyResolutionManagement {
 rootProject.name = "swiss-knife"
 
 include(":bottom-sheet")
+include(":examples:android")

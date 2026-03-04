@@ -27,6 +27,10 @@ kotlin {
 
     withHostTest { /* ... */ }
     withDeviceTest { /* ... */ }
+
+    androidResources {
+      enable = true
+    }
   }
 
   sourceSets {
@@ -41,6 +45,7 @@ kotlin {
       implementation(libs.androidx.core)
       implementation(libs.androidx.activity.compose)
       implementation(libs.androidx.lifecycle.viewModel)
+      implementation(libs.androidx.appCompat)
     }
 
     dependencies.androidRuntimeClasspath(libs.compose.ui.tooling.library)

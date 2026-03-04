@@ -1,7 +1,6 @@
 package io.gitlab.ilyadreamix.swissknife.bottomsheet
 
-import android.app.Dialog
-import android.graphics.Color
+import android.view.ViewGroup
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
 import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
@@ -10,8 +9,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.graphics.drawable.toDrawable
-import androidx.core.view.WindowCompat
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.lifecycle.setViewTreeViewModelStoreOwner
@@ -29,22 +26,7 @@ internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
 
   val compositionContext = rememberCompositionContext()
 
-  val dialog = remember {
-    Dialog(context).apply {
-      window?.apply {
-        setBackgroundDrawable(Color.TRANSPARENT.toDrawable())
-        setDimAmount(0f)
-
-        WindowCompat.setDecorFitsSystemWindows(this, false)
-
-        @Suppress("DEPRECATION")
-        statusBarColor = Color.TRANSPARENT
-        @Suppress("DEPRECATION")
-        navigationBarColor = Color.TRANSPARENT
-      }
-    }
-  }
-
+  val dialog = remember { SKBottomSheetDialog(context) }
   val composeView = remember {
     ComposeView(context).apply {
       setParentCompositionContext(compositionContext)
@@ -57,6 +39,7 @@ internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
         setViewTreeOnBackPressedDispatcherOwner(onBackPressedDispatcherOwner)
       }
 
+      layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
       setContent { content() }
     }
   }
