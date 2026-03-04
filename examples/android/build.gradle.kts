@@ -49,7 +49,7 @@ android {
 }
 
 dependencies {
-  implementation(projects.bottomSheet)
+  implementation(projects.dialogs)
 
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core)

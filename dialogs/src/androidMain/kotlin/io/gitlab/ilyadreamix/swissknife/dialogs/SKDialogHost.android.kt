@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.bottomsheet
+package io.gitlab.ilyadreamix.swissknife.dialogs
 
 import android.view.ViewGroup
 import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
@@ -17,7 +17,7 @@ import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 @Composable
-internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
+internal actual fun SKDialogHost(content: @Composable () -> Unit) {
   val context = LocalContext.current
   val lifecycleOwner = LocalLifecycleOwner.current
   val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -26,7 +26,7 @@ internal actual fun SKBottomSheetContainer(content: @Composable () -> Unit) {
 
   val compositionContext = rememberCompositionContext()
 
-  val dialog = remember { SKBottomSheetDialog(context) }
+  val dialog = remember { SKTransparentDialog(context) }
   val composeView = remember {
     ComposeView(context).apply {
       setParentCompositionContext(compositionContext)

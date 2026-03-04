@@ -17,7 +17,7 @@ kotlin {
     compileSdk = libs.versions.app.android.sdk.compile.get().toInt()
     minSdk = libs.versions.app.android.sdk.min.get().toInt()
 
-    namespace = "io.gitlab.ilyadreamix.swissknife.bottomsheet"
+    namespace = "io.gitlab.ilyadreamix.swissknife.dialogs"
 
     tasks.withType<KotlinCompile>().configureEach {
       compilerOptions {

@@ -7,7 +7,7 @@ import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.text.BasicText
-import io.gitlab.ilyadreamix.swissknife.bottomsheet.SKBottomSheet
+import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheet
 
 internal class SKActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {

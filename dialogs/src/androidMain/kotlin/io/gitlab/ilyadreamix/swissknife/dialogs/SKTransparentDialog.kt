@@ -1,12 +1,12 @@
-package io.gitlab.ilyadreamix.swissknife.bottomsheet
+package io.gitlab.ilyadreamix.swissknife.dialogs
 
 import android.app.Dialog
 import android.content.Context
 import android.view.ViewGroup
 import androidx.core.view.WindowCompat
 
-internal class SKBottomSheetDialog(context: Context)
-  : Dialog(context, R.style.SKBottomSheetDialog) {
+internal class SKTransparentDialog(context: Context)
+  : Dialog(context, R.style.SKTransparentDialog) {
 
   override fun onStart() {
     super.onStart()
