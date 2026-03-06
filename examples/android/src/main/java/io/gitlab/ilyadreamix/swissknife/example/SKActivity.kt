@@ -1,13 +1,33 @@
 package io.gitlab.ilyadreamix.swissknife.example
 
-import android.graphics.Color
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheet
+import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheetBehavior
+import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheetContainer
+import android.graphics.Color as SdkColor
 
 internal class SKActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,16 +35,45 @@ internal class SKActivity : ComponentActivity() {
 
     enableEdgeToEdge(
       navigationBarStyle = SystemBarStyle.auto(
-        lightScrim = Color.TRANSPARENT,
-        darkScrim = Color.TRANSPARENT
+        lightScrim = SdkColor.TRANSPARENT,
+        darkScrim = SdkColor.TRANSPARENT
       ),
     )
 
     setContent {
+
+      var visible by remember { mutableStateOf(false) }
+
+      Box(
+        modifier = Modifier
+          .fillMaxWidth()
+          .padding(100.dp)
+          .background(Color.Red).clickable { visible = true }
+      ) {
+        BasicText(text = "Click me!", modifier = Modifier)
+      }
+
       SKBottomSheet(
-        visible = true,
-        onHide = {},
-        content = { BasicText(text = "Hello, world!") }
+        visible = visible,
+        onHide = { visible = false },
+        container = SKBottomSheetContainer(
+          color = Color.White,
+          shape = androidx.compose.foundation.shape.RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp),
+          padding = PaddingValues(10.dp)
+        ),
+        behavior = SKBottomSheetBehavior(animationSpec = tween(300)),
+        content = {
+          Column(
+            modifier = Modifier
+              .height(200.dp)
+              .fillMaxWidth()
+              .verticalScroll(rememberScrollState())
+          ) {
+            repeat(100) {
+              BasicText(text = "Item $it")
+            }
+          }
+        }
       )
     }
   }

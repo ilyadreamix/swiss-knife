@@ -1,8 +1,7 @@
 package io.gitlab.ilyadreamix.swissknife.dialogs
 
+import android.view.KeyEvent
 import android.view.ViewGroup
-import androidx.activity.compose.LocalOnBackPressedDispatcherOwner
-import androidx.activity.setViewTreeOnBackPressedDispatcherOwner
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -17,16 +16,15 @@ import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 @Composable
-internal actual fun SKDialogHost(content: @Composable () -> Unit) {
+internal actual fun SKDialogHost(onBack: () -> Boolean, content: @Composable () -> Unit) {
   val context = LocalContext.current
   val lifecycleOwner = LocalLifecycleOwner.current
   val viewModelStoreOwner = LocalViewModelStoreOwner.current
   val savedStateRegistryOwner = LocalSavedStateRegistryOwner.current
-  val onBackPressedDispatcherOwner = LocalOnBackPressedDispatcherOwner.current
 
   val compositionContext = rememberCompositionContext()
 
-  val dialog = remember { SKTransparentDialog(context) }
+  val dialog = remember { SKTransparentDialog(context, onBack) }
   val composeView = remember {
     ComposeView(context).apply {
       setParentCompositionContext(compositionContext)
@@ -35,12 +33,17 @@ internal actual fun SKDialogHost(content: @Composable () -> Unit) {
       setViewTreeViewModelStoreOwner(viewModelStoreOwner)
       setViewTreeSavedStateRegistryOwner(savedStateRegistryOwner)
 
-      if (onBackPressedDispatcherOwner != null) {
-        setViewTreeOnBackPressedDispatcherOwner(onBackPressedDispatcherOwner)
+      setOnKeyListener { _, _, event ->
+        if (event.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
+          onBack()
+          return@setOnKeyListener true
+        } else {
+          return@setOnKeyListener false
+        }
       }
 
       layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-      setContent { content() }
+      setContent(content)
     }
   }
 
