@@ -6,8 +6,16 @@ import android.view.KeyEvent
 import android.view.ViewGroup
 import androidx.core.view.WindowCompat
 
-internal class SKTransparentDialog(context: Context, private val onBack: () -> Boolean)
-  : Dialog(context, R.style.SKTransparentDialog) {
+internal data class SKTransparentDialogSystemUIOptions(
+  val isAppearanceLightStatusBars: Boolean,
+  val isAppearanceLightNavigationBars: Boolean,
+)
+
+internal class SKTransparentDialog(
+  context: Context,
+  private val onBack: () -> Boolean,
+  private val systemUIOptions: SKTransparentDialogSystemUIOptions
+) : Dialog(context, R.style.SKTransparentDialog) {
 
   init { setCancelable(false) }
 
@@ -27,9 +35,10 @@ internal class SKTransparentDialog(context: Context, private val onBack: () -> B
       setWindowAnimations(-1)
 
       WindowCompat.enableEdgeToEdge(this)
-      WindowCompat
-        .getInsetsController(this, decorView)
-        .apply { isAppearanceLightStatusBars = false }
+      WindowCompat.getInsetsController(this, decorView).apply {
+        isAppearanceLightStatusBars = systemUIOptions.isAppearanceLightStatusBars
+        isAppearanceLightNavigationBars = systemUIOptions.isAppearanceLightNavigationBars
+      }
     }
   }
 }

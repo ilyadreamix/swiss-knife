@@ -1,6 +1,8 @@
 package io.gitlab.ilyadreamix.swissknife.dialogs
 
+import android.content.Context
 import android.view.ViewGroup
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
@@ -15,7 +17,11 @@ import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 @Composable
-internal actual fun SKDialogHost(onBack: () -> Boolean, content: @Composable () -> Unit) {
+internal actual fun SKDialogHost(
+  onBack: () -> Boolean,
+  systemUIOptions: SKDialogHostSystemUIOptions,
+  content: @Composable () -> Unit
+) {
   val context = LocalContext.current
   val lifecycleOwner = LocalLifecycleOwner.current
   val viewModelStoreOwner = LocalViewModelStoreOwner.current
@@ -23,7 +29,9 @@ internal actual fun SKDialogHost(onBack: () -> Boolean, content: @Composable () 
 
   val compositionContext = rememberCompositionContext()
 
-  val dialog = remember { SKTransparentDialog(context, onBack) }
+  val isSystemDark = isSystemInDarkTheme()
+  val dialog = remember { SKTransparentDialog(context, onBack, systemUIOptions, isSystemDark) }
+
   val composeView = remember {
     ComposeView(context).apply {
       setParentCompositionContext(compositionContext)
@@ -46,4 +54,30 @@ internal actual fun SKDialogHost(onBack: () -> Boolean, content: @Composable () 
       composeView.disposeComposition()
     }
   }
+}
+
+private fun SKTransparentDialog(
+  context: Context,
+  onBack: () -> Boolean,
+  systemUIOptions: SKDialogHostSystemUIOptions,
+  isSystemDark: Boolean
+): SKTransparentDialog {
+  val isAppearanceLightStatusBars = when (systemUIOptions.statusBarIconsStyle) {
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> true
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> false
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> isSystemDark
+  }
+
+  val isAppearanceLightNavigationBars = when (systemUIOptions.navigationBarIconsStyle) {
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> true
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> false
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> isSystemDark
+  }
+
+  val sktdSystemUIOptions = SKTransparentDialogSystemUIOptions(
+    isAppearanceLightStatusBars = isAppearanceLightStatusBars,
+    isAppearanceLightNavigationBars = isAppearanceLightNavigationBars,
+  )
+
+  return SKTransparentDialog(context, onBack, sktdSystemUIOptions)
 }

@@ -10,7 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -58,20 +58,25 @@ internal class SKActivity : ComponentActivity() {
         onHide = { visible = false },
         container = SKBottomSheetContainer(
           color = Color.White,
-          shape = androidx.compose.foundation.shape.RoundedCornerShape(topEnd = 10.dp, topStart = 10.dp),
-          padding = PaddingValues(10.dp)
+          shape = androidx.compose.foundation.shape.RoundedCornerShape(
+            topStart = 16.dp, topEnd = 16.dp
+          ),
+          maxWidth = 480.dp
         ),
         behavior = SKBottomSheetBehavior(animationSpec = tween(300)),
         content = {
           Column(
             modifier = Modifier
-              .height(200.dp)
-              .fillMaxWidth()
+              .fillMaxSize()
               .verticalScroll(rememberScrollState())
           ) {
+            Box(modifier = Modifier.height(16.dp))
+
             repeat(100) {
-              BasicText(text = "Item $it")
+              BasicText(text = "Item $it", modifier = Modifier.padding(horizontal = 16.dp))
             }
+
+            Box(modifier = Modifier.height(16.dp))
           }
         }
       )

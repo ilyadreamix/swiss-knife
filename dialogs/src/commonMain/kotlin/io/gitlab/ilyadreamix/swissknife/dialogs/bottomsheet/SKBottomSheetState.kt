@@ -11,8 +11,8 @@ import androidx.compose.runtime.withFrameNanos
 @Composable
 internal fun rememberSKBottomSheetState(
   visible: Boolean,
-  animationSpec: AnimationSpec<Float>? = null,
-  dismissThreshold: Float = 0.4f,
+  animationSpec: AnimationSpec<Float>?,
+  dismissThreshold: Float
 ) = remember { SKBottomSheetState(visible, animationSpec, dismissThreshold) }
 
 @Stable
