@@ -14,6 +14,7 @@ data class SKDialogHostSystemUIOptions(
 ) {
   /**
    * Controls whether system bar icons (status bar, navigation bar) appear light or dark.
+   *
    * @see SystemBarIconsStyle.Light
    * @see SystemBarIconsStyle.Dark
    * @see SystemBarIconsStyle.Automatic

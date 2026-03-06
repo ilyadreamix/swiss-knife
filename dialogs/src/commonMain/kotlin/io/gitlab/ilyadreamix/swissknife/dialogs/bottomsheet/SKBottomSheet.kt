@@ -40,6 +40,11 @@ import kotlinx.coroutines.launch
  *
  * Passed to [SKBottomSheet]'s `onHide` callback so the caller can distinguish
  * between different user interactions and react accordingly.
+ *
+ * @see SKBottomSheetHideReason.Back
+ * @see SKBottomSheetHideReason.Drag
+ * @see SKBottomSheetHideReason.TouchOutside
+ *
  */
 enum class SKBottomSheetHideReason {
   /** The system back button or back gesture was triggered. */
