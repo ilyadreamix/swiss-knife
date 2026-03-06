@@ -3,8 +3,8 @@ package io.gitlab.ilyadreamix.swissknife.dialogs
 import android.app.Dialog
 import android.content.Context
 import android.view.KeyEvent
-import android.view.ViewGroup
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 internal data class SKTransparentDialogSystemUIOptions(
   val isAppearanceLightStatusBars: Boolean,
@@ -27,15 +27,11 @@ internal class SKTransparentDialog(
     }
   }
 
-  override fun onStart() {
-    super.onStart()
-
+  override fun onAttachedToWindow() {
+    super.onAttachedToWindow()
     window?.apply {
-      setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-      setWindowAnimations(-1)
-
       WindowCompat.enableEdgeToEdge(this)
-      WindowCompat.getInsetsController(this, decorView).apply {
+      WindowInsetsControllerCompat(this, decorView).apply {
         isAppearanceLightStatusBars = systemUIOptions.isAppearanceLightStatusBars
         isAppearanceLightNavigationBars = systemUIOptions.isAppearanceLightNavigationBars
       }

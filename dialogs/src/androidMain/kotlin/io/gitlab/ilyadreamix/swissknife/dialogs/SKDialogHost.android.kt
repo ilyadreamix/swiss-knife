@@ -63,15 +63,15 @@ private fun SKTransparentDialog(
   isSystemDark: Boolean
 ): SKTransparentDialog {
   val isAppearanceLightStatusBars = when (systemUIOptions.statusBarIconsStyle) {
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> true
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> false
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> isSystemDark
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> false
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> true
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> !isSystemDark
   }
 
   val isAppearanceLightNavigationBars = when (systemUIOptions.navigationBarIconsStyle) {
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> true
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> false
-    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> isSystemDark
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light -> false
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Dark -> true
+    SKDialogHostSystemUIOptions.SystemBarIconsStyle.Automatic -> !isSystemDark
   }
 
   val sktdSystemUIOptions = SKTransparentDialogSystemUIOptions(

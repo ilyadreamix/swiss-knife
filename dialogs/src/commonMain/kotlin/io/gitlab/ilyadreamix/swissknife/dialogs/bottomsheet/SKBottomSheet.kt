@@ -236,7 +236,8 @@ fun SKBottomSheet(
         } else {
           false
         }
-      }
+      },
+      systemUIOptions = systemUIOptions,
     ) {
       Box(
         modifier = Modifier

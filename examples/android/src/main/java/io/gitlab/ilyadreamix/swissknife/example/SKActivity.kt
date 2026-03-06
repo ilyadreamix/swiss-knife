@@ -1,11 +1,10 @@
 package io.gitlab.ilyadreamix.swissknife.example
 
+import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
-import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -36,20 +35,23 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheetInsets
 import io.gitlab.ilyadreamix.swissknife.example.composables.SKMaterial3BottomSheet
-import android.graphics.Color as SdkColor
 
 internal class SKActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
 
-    enableEdgeToEdge(
-      navigationBarStyle = SystemBarStyle.auto(
-        lightScrim = SdkColor.TRANSPARENT,
-        darkScrim = SdkColor.TRANSPARENT
-      ),
-    )
+    val isDarkTheme =
+      (resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES
+
+    WindowCompat.enableEdgeToEdge(window)
+
+    val wic = WindowInsetsControllerCompat(window, window.decorView)
+    wic.isAppearanceLightStatusBars = !isDarkTheme
+    wic.isAppearanceLightNavigationBars = !isDarkTheme
 
     setContent {
 
