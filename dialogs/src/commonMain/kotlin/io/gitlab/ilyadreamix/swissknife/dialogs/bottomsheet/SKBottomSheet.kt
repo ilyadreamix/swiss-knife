@@ -118,13 +118,13 @@ data class SKBottomSheetBehavior(
  * while the background itself extends to the screen edge.
  */
 data class SKBottomSheetInsets(
-  val top: Dp,
-  val bottom: Dp,
-  val start: Dp,
-  val end: Dp,
+  val top: Dp = 0.dp,
+  val bottom: Dp = 0.dp,
+  val start: Dp = 0.dp,
+  val end: Dp = 0.dp,
 ) {
   companion object {
-    val Zero = SKBottomSheetInsets(0.dp, 0.dp, 0.dp, 0.dp)
+    val Zero = SKBottomSheetInsets()
   }
 }
 
