@@ -1,6 +1,5 @@
 package io.gitlab.ilyadreamix.swissknife.dialogs
 
-import android.view.KeyEvent
 import android.view.ViewGroup
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -32,15 +31,6 @@ internal actual fun SKDialogHost(onBack: () -> Boolean, content: @Composable () 
       setViewTreeLifecycleOwner(lifecycleOwner)
       setViewTreeViewModelStoreOwner(viewModelStoreOwner)
       setViewTreeSavedStateRegistryOwner(savedStateRegistryOwner)
-
-      setOnKeyListener { _, _, event ->
-        if (event.keyCode == KeyEvent.KEYCODE_BACK && event.action == KeyEvent.ACTION_UP) {
-          onBack()
-          return@setOnKeyListener true
-        } else {
-          return@setOnKeyListener false
-        }
-      }
 
       layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
       setContent(content)
