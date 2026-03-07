@@ -29,8 +29,31 @@ data class SKDialogHostSystemUIOptions(
   }
 }
 
+/**
+ * A platform-implemented full-sized transparent overlay container used internally by Swiss Knife
+ * dialog components (e.g. [io.github.ilyadreamix.swissknife.dialogs.alert.SKAlert]).
+ * It renders [content] above the main UI, intercepts back gestures,
+ * and optionally adjusts system UI while visible.
+ *
+ * ## Usage
+ * `SKDialogHost` should be wrapped in an `if` block. When the condition becomes `false`,
+ * the host is removed from the composition immediately – with no animations.
+ * Any exit transitions must be handled by the [content] itself before the condition flips:
+ * ```
+ * if (isVisible) {
+ *   SKDialogHost(...) {
+ *     // Content lives here
+ *   }
+ * }
+ * ```
+ *
+ * @param onBack Invoked when the system back button or back gesture is triggered.
+ *   Return `true` to consume the event, `false` to let it propagate up the back stack.
+ * @param systemUIOptions Controls the appearance of the system UI while the host is active.
+ * @param content The composable content rendered inside the overlay.
+ */
 @Composable
-internal expect fun SKDialogHost(
+expect fun SKDialogHost(
   onBack: () -> Boolean,
   systemUIOptions: SKDialogHostSystemUIOptions = SKDialogHostSystemUIOptions(),
   content: @Composable () -> Unit

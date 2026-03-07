@@ -6,6 +6,7 @@ Dialog components for Swiss Knife.
 
 - [SKAlert](#skalert)
 - [SKBottomSheet](#skbottomsheet)
+- [SKDialogHost](#skdialoghost)
 
 ### SKAlert
 
@@ -54,5 +55,23 @@ SKBottomSheet(
   ),
 ) {
   // Content
+}
+```
+
+### SKDialogHost
+
+A platform-implemented full-sized transparent overlay used internally by `SKAlert`, `SKBottomSheet`,
+and other dialog components. Use it directly only if you need a custom dialog with full control
+over back handling and system UI.
+
+Must be wrapped in an `if` block — when the condition flips to `false`, the host is removed
+immediately with no animations. Exit transitions must be completed by the content before that happens.
+```kotlin
+if (isVisible) {
+  SKDialogHost(
+    onBack = { isVisible = false; true },
+  ) {
+    // Content
+  }
 }
 ```

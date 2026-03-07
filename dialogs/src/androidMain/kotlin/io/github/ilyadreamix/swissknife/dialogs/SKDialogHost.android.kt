@@ -17,7 +17,7 @@ import androidx.savedstate.compose.LocalSavedStateRegistryOwner
 import androidx.savedstate.setViewTreeSavedStateRegistryOwner
 
 @Composable
-internal actual fun SKDialogHost(
+actual fun SKDialogHost(
   onBack: () -> Boolean,
   systemUIOptions: SKDialogHostSystemUIOptions,
   content: @Composable () -> Unit
