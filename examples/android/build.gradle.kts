@@ -19,7 +19,7 @@ tasks.withType<KotlinCompile>().configureEach {
 
 android {
   compileSdk = libs.versions.app.android.sdk.compile.get().toInt()
-  namespace = "io.gitlab.ilyadreamix.swissknife.example"
+  namespace = "io.github.ilyadreamix.swissknife.example"
 
   defaultConfig {
     applicationId = "io.gitlab.ilyadreamix.swissknife.example"

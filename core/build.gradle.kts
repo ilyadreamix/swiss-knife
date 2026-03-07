@@ -17,7 +17,7 @@ kotlin {
     compileSdk = libs.versions.app.android.sdk.compile.get().toInt()
     minSdk = libs.versions.app.android.sdk.min.get().toInt()
 
-    namespace = "io.github.ilyadreamix.swissknife.dialogs"
+    namespace = "io.github.ilyadreamix.swissknife.core"
 
     tasks.withType<KotlinCompile>().configureEach {
       compilerOptions {
@@ -35,8 +35,6 @@ kotlin {
 
   sourceSets {
     commonMain.dependencies {
-      api(projects.core)
-
       implementation(libs.compose.ui.library)
       implementation(libs.compose.foundation)
       implementation(libs.compose.runtime)

@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.example
+package io.github.ilyadreamix.swissknife.example
 
 import android.content.res.Configuration
 import android.os.Build
@@ -6,7 +6,9 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
@@ -34,11 +36,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.datasource.LoremIpsum
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
-import io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet.SKBottomSheetInsets
-import io.gitlab.ilyadreamix.swissknife.example.composables.SKMaterial3BottomSheet
+import io.github.ilyadreamix.swissknife.core.SKInsets
+import io.github.ilyadreamix.swissknife.example.composables.SKMaterial3Alert
+import io.github.ilyadreamix.swissknife.example.composables.SKMaterial3BottomSheet
 
 internal class SKActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,6 +76,7 @@ internal class SKActivity : ComponentActivity() {
       }
 
       var sheetVisible by remember { mutableStateOf(false) }
+      var alertVisible by remember { mutableStateOf(false) }
 
       MaterialTheme(colorScheme) {
         Scaffold(
@@ -84,16 +89,22 @@ internal class SKActivity : ComponentActivity() {
             )
           }
         ) { innerPadding ->
-          Box(
+          Column(
             modifier = Modifier
               .fillMaxSize()
               .padding(innerPadding)
               .padding(16.dp),
-            contentAlignment = Alignment.Center
+            verticalArrangement = Arrangement.spacedBy(8.dp, Alignment.CenterVertically),
+            horizontalAlignment = Alignment.CenterHorizontally
           ) {
             Button(
               onClick = { sheetVisible = true },
               content = { Text(text = "Show bottom sheet") }
+            )
+
+            Button(
+              onClick = { alertVisible = true },
+              content = { Text(text = "Show alert") }
             )
           }
         }
@@ -101,7 +112,7 @@ internal class SKActivity : ComponentActivity() {
         SKMaterial3BottomSheet(
           visible = sheetVisible,
           onHide = { sheetVisible = false },
-          insets = SKBottomSheetInsets(
+          insets = SKInsets(
             top = insetsPaddingTop,
             start = insetsPaddingStart,
             end = insetsPaddingEnd,
@@ -130,6 +141,19 @@ internal class SKActivity : ComponentActivity() {
             }
           }
         }
+
+        SKMaterial3Alert(
+          visible = alertVisible,
+          onHide = { alertVisible = false },
+          title = { Text(text = "Headline") },
+          text = { Text(text = LoremIpsum(48).values.joinToString(" ")) },
+          hideButton = {
+            Button(
+              onClick = { alertVisible = false },
+              content = { Text(text = "Close") }
+            )
+          }
+        )
       }
     }
   }

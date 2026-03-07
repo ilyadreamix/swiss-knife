@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet
+package io.github.ilyadreamix.swissknife.dialogs.bottomsheet
 
 import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.foundation.background
@@ -6,7 +6,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,24 +14,23 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.isSpecified
-import io.gitlab.ilyadreamix.swissknife.dialogs.SKDialogHost
-import io.gitlab.ilyadreamix.swissknife.dialogs.SKDialogHostSystemUIOptions
+import io.github.ilyadreamix.swissknife.core.SKInsets
+import io.github.ilyadreamix.swissknife.dialogs.SKDialogHost
+import io.github.ilyadreamix.swissknife.dialogs.SKDialogHostSystemUIOptions
 import kotlinx.coroutines.launch
 
 /**
@@ -44,7 +42,6 @@ import kotlinx.coroutines.launch
  * @see SKBottomSheetHideReason.Back
  * @see SKBottomSheetHideReason.Drag
  * @see SKBottomSheetHideReason.TouchOutside
- *
  */
 enum class SKBottomSheetHideReason {
   /** The system back button or back gesture was triggered. */
@@ -86,12 +83,14 @@ data class SKBottomSheetHideOptions(
  *
  * @param maxWidth Maximum width of the sheet. Use [Dp.Unspecified] to fill the full screen width.
  * @param color Background color of the sheet surface.
- * @param shape Shape applied to the sheet surface (e.g. rounded top corners).
+ * @param shape Shape applied to the sheet surface.
+ * @param elevation Elevation (shadow) of the sheet. Use [Dp.Unspecified] to disable the elevation.
  */
 data class SKBottomSheetContainer(
   val maxWidth: Dp = Dp.Unspecified,
   val color: Color,
-  val shape: Shape
+  val shape: Shape,
+  val elevation: Dp = Dp.Unspecified
 )
 
 /**
@@ -108,44 +107,6 @@ data class SKBottomSheetBehavior(
   val animationSpec: AnimationSpec<Float>? = null,
   val nestedScroll: Boolean = true,
 )
-
-/**
- * Inset configuration applied to the bottom sheet surface.
- *
- * Top, start, and end insets are applied as padding **outside** the sheet background,
- * capping its maximum size within safe bounds. Bottom inset is applied **inside**
- * the sheet background, so the content is pushed up above the navigation bar
- * while the background itself extends to the screen edge.
- */
-data class SKBottomSheetInsets(
-  val top: Dp = 0.dp,
-  val bottom: Dp = 0.dp,
-  val start: Dp = 0.dp,
-  val end: Dp = 0.dp,
-) {
-  companion object {
-    val Zero = SKBottomSheetInsets()
-  }
-}
-
-/**
- * Constructs [SKBottomSheetInsets] from [WindowInsets].
- */
-@Suppress("ComposableNaming")
-@Composable
-@ReadOnlyComposable
-fun SKBottomSheetInsets(windowInsets: WindowInsets): SKBottomSheetInsets {
-
-  val layoutDirection = LocalLayoutDirection.current
-
-  val padding = windowInsets.asPaddingValues()
-  val top = padding.calculateTopPadding()
-  val bottom = padding.calculateBottomPadding()
-  val start = padding.calculateLeftPadding(layoutDirection)
-  val end = padding.calculateRightPadding(layoutDirection)
-
-  return SKBottomSheetInsets(top, bottom, start, end)
-}
 
 /**
  * A bottom sheet component with animated show/hide transitions, drag-to-dismiss,
@@ -190,7 +151,11 @@ fun SKBottomSheetInsets(windowInsets: WindowInsets): SKBottomSheetInsets {
  * @param scrimColor Color of the background overlay behind the sheet.
  * @param onHidden Invoked once the hide animation has fully completed. See above.
  * @param insets Window insets applied to the sheet surface.
- *   Pass [SKBottomSheetInsets.Zero] to disable inset handling.
+ *   Top, start, and end insets are applied as padding **outside** the sheet background,
+ *   capping its maximum size within safe bounds. Bottom inset is applied **inside**
+ *   the sheet background, so the content is pushed up above the navigation bar
+ *   while the background itself extends to the screen edge.
+ *   Pass [SKInsets.Zero] to disable inset handling.
  * @param systemUIOptions Controls system bar icons appearance while the sheet is shown.
  *   The default parameter keeps in mind that the scrim is dark by default,
  *   so it uses light status bar icons.
@@ -205,7 +170,7 @@ fun SKBottomSheet(
   behavior: SKBottomSheetBehavior = SKBottomSheetBehavior(),
   scrimColor: Color = Color.Black.copy(alpha = 0.5f),
   onHidden: (() -> Unit)? = null,
-  insets: SKBottomSheetInsets = SKBottomSheetInsets(WindowInsets.safeDrawing),
+  insets: SKInsets = SKInsets(WindowInsets.safeDrawing),
   systemUIOptions: SKDialogHostSystemUIOptions = SKDialogHostSystemUIOptions(statusBarIconsStyle = SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light),
   content: @Composable () -> Unit
 ) {
@@ -269,8 +234,15 @@ fun SKBottomSheet(
               top = insets.top,
             )
             .graphicsLayer { translationY = size.height * (1f - animationProgress) }
-            .onSizeChanged { state.setHeight(it.height.toFloat()) }
+            .then(
+              if (container.elevation.isSpecified) {
+                Modifier.shadow(container.elevation, container.shape)
+              } else {
+                Modifier
+              }
+            )
             .background(container.color, container.shape)
+            .onSizeChanged { state.setHeight(it.height.toFloat()) }
             .pointerInput(Unit) {
               detectTapGestures { /* ... */ }
             }

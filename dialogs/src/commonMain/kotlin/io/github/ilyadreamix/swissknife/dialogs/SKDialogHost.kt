@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.dialogs
+package io.github.ilyadreamix.swissknife.dialogs
 
 import androidx.compose.runtime.Composable
 

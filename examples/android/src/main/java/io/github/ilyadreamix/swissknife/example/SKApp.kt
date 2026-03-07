@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.example
+package io.github.ilyadreamix.swissknife.example
 
 import android.app.Application
 

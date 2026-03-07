@@ -3,7 +3,7 @@
 // https://github.com/dokar3/sheets/blob/2c4ca1817cd7217cbdffe4a1c936596d9a37bcce/sheets-core/src/commonMain/kotlin/com/dokar/sheets/SheetNestedScrollConnection.kt
 //
 
-package io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet
+package io.github.ilyadreamix.swissknife.dialogs.bottomsheet
 
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.input.nestedscroll.NestedScrollConnection

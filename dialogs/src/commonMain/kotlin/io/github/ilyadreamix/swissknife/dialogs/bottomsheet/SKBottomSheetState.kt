@@ -1,4 +1,4 @@
-package io.gitlab.ilyadreamix.swissknife.dialogs.bottomsheet
+package io.github.ilyadreamix.swissknife.dialogs.bottomsheet
 
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.AnimationSpec
@@ -7,6 +7,7 @@ import androidx.compose.runtime.Stable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameNanos
+import io.github.ilyadreamix.swissknife.core.extensions.animate
 
 @Composable
 internal fun rememberSKBottomSheetState(
@@ -37,23 +38,22 @@ internal class SKBottomSheetState(
   suspend fun show() {
     _visible.value = true
     withFrameNanos { /* ... */ }
-    animateTo(1f)
+    _animationProgress.animate(1f, animationSpec)
   }
 
   suspend fun hide() {
-    animateTo(0f)
+    _animationProgress.animate(0f, animationSpec)
     _visible.value = false
   }
 
   fun onDragStart() { totalDragAmount = 0f }
 
-  suspend fun onDragCancel() { animateTo(1f) }
+  suspend fun onDragCancel() { _animationProgress.animate(1f, animationSpec) }
 
   suspend fun onDrag(amount: Float) {
-    val currentHeight = height
     if (height > 0f) {
       totalDragAmount += amount
-      val progress = 1f - (totalDragAmount / currentHeight).coerceAtLeast(0f)
+      val progress = 1f - (totalDragAmount / height).coerceAtLeast(0f)
       _animationProgress.snapTo(progress)
     }
   }
@@ -71,11 +71,5 @@ internal class SKBottomSheetState(
     totalDragAmount = 0f
 
     return shouldHide
-  }
-
-  private suspend fun animateTo(value: Float) {
-    animationSpec
-      ?.let { _animationProgress.animateTo(value, it) }
-      ?: _animationProgress.animateTo(value)
   }
 }
