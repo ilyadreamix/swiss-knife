@@ -2,7 +2,12 @@
 
 A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilities and components.
 
-![SKAlert](docs/SKAlert.gif) ![SKBottomSheet](docs/SKBottomSheet.gif)
+<table>
+  <tr>
+    <td><img src="docs/SKAlert.gif"/></td>
+    <td><img src="docs/SKBottomSheet.gif"/></td>
+  </tr>
+</table>
 
 ## Modules
 
