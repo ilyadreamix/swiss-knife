@@ -3,10 +3,18 @@
 A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilities and components.
 
 <table>
-  <tr>
-    <td><video src="https://github.com/user-attachments/assets/2b363ef0-0757-4761-b811-0e2b733ba4eb" height="500" autoplay loop muted></video></td>
-    <td><video src="https://github.com/user-attachments/assets/044651d4-d6e3-40b1-8a1c-0b957a2eef57" height="500" autoplay loop muted></video></td>
-  </tr>
+  <thead>
+    <tr>
+      <th>SKAlert</th>
+      <th>SKBottomSheet</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><video src="https://github.com/user-attachments/assets/2b363ef0-0757-4761-b811-0e2b733ba4eb" height="500" autoplay loop muted></video></td>
+      <td><video src="https://github.com/user-attachments/assets/044651d4-d6e3-40b1-8a1c-0b957a2eef57" height="500" autoplay loop muted></video></td>
+    </tr>
+  </tbody>
 </table>
 
 ## Modules
