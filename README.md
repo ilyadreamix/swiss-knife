@@ -4,8 +4,8 @@ A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilit
 
 <table>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/2b363ef0-0757-4761-b811-0e2b733ba4eb" height="500"/></td>
-    <td><img src="https://github.com/user-attachments/assets/044651d4-d6e3-40b1-8a1c-0b957a2eef57" height="500"/></td>
+    <td><img src="https://github.com/user-attachments/assets/2b363ef0-0757-4761-b811-0e2b733ba4eb" height="500" autoplay loop muted/></td>
+    <td><img src="https://github.com/user-attachments/assets/044651d4-d6e3-40b1-8a1c-0b957a2eef57" height="500" autoplay loop muted/></td>
   </tr>
 </table>
 
