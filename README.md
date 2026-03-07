@@ -4,8 +4,8 @@ A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilit
 
 <table>
   <tr>
-    <td><img src="docs/SKAlert.gif"/></td>
-    <td><img src="docs/SKBottomSheet.gif"/></td>
+    <td><img src="docs/SKAlert.gif" height="500"/></td>
+    <td><img src="docs/SKBottomSheet.gif" height="500"/></td>
   </tr>
 </table>
 

@@ -7,9 +7,7 @@ Dialog components for Swiss Knife.
 - [SKAlert](#skalert)
 - [SKBottomSheet](#skbottomsheet)
 
----
-
-## SKAlert
+### SKAlert
 
 An alert dialog with an ability to animate hide/show transitions. The caller fully
 controls visibility – `SKAlert` never hides itself.
@@ -36,9 +34,7 @@ SKAlert(
 }
 ```
 
----
-
-## SKBottomSheet
+### SKBottomSheet
 
 A bottom sheet with animated slide-in/out, drag-to-dismiss, nested scroll support, and a dimmed
 scrim. Same visibility contract as `SKAlert` – the caller owns the `visible` flag.
