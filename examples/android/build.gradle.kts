@@ -22,7 +22,7 @@ android {
   namespace = "io.github.ilyadreamix.swissknife.example"
 
   defaultConfig {
-    applicationId = "io.gitlab.ilyadreamix.swissknife.example"
+    applicationId = "io.github.ilyadreamix.swissknife.example"
 
     minSdk = libs.versions.app.android.sdk.min.get().toInt()
     targetSdk = libs.versions.app.android.sdk.target.get().toInt()
