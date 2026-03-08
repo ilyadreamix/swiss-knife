@@ -25,4 +25,5 @@ rootProject.name = "swiss-knife"
 
 include(":core")
 include(":dialogs")
+include(":examples:core")
 include(":examples:android")

@@ -50,6 +50,7 @@ android {
 
 dependencies {
   implementation(projects.dialogs)
+  implementation(projects.examples.core)
 
   implementation(libs.androidx.activity.compose)
   implementation(libs.androidx.core)
