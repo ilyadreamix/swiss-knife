@@ -9,7 +9,7 @@ app-android-sdk-compile = "36"
 app-android-sdk-min = "28"
 app-android-sdk-target = "36"
 compose = "1.10.1"
-compose-material3 = "1.4.0"
+compose-material3 = "1.9.0"
 
 [libraries]
 androidx-core = { module = "androidx.core:core-ktx", version.ref = "androidx-core" }
