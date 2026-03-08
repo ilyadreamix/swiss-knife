@@ -33,6 +33,7 @@ actual fun SKDialogHost(
   DisposableEffect(
     isSystemDark,
     systemUIOptions,
+    context,
     compositionContext,
     lifecycleOwner,
     viewModelStoreOwner,
