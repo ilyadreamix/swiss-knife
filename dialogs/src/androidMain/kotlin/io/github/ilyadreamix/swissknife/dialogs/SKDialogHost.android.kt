@@ -5,7 +5,6 @@ import android.view.ViewGroup
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCompositionContext
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.LocalContext
@@ -30,10 +29,16 @@ actual fun SKDialogHost(
   val compositionContext = rememberCompositionContext()
 
   val isSystemDark = isSystemInDarkTheme()
-  val dialog = remember { SKTransparentDialog(context, onBack, systemUIOptions, isSystemDark) }
 
-  val composeView = remember {
-    ComposeView(context).apply {
+  DisposableEffect(
+    isSystemDark,
+    systemUIOptions,
+    compositionContext,
+    lifecycleOwner,
+    viewModelStoreOwner,
+    savedStateRegistryOwner
+  ) {
+    val composeView = ComposeView(context).apply {
       setParentCompositionContext(compositionContext)
 
       setViewTreeLifecycleOwner(lifecycleOwner)
@@ -43,9 +48,8 @@ actual fun SKDialogHost(
       layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
       setContent(content)
     }
-  }
 
-  DisposableEffect(Unit) {
+    val dialog = SKTransparentDialog(context, onBack, systemUIOptions, isSystemDark)
     dialog.setContentView(composeView)
     dialog.show()
 
