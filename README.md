@@ -35,8 +35,8 @@ A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilit
 
 ## Examples
 
-The `examples` module contains a working Android and iOS apps that demonstrate `SKAlert` and
-`SKBottomSheet` integrated with Material 3 theming. Run it directly from Android Studio/Xcode.
+The `examples` folder contains working Android and iOS apps modules that demonstrate `SKAlert` and
+`SKBottomSheet` integrated with Material 3 theming. Run them directly from Android Studio/Xcode.
 
 <a name="ios-note"></a>
 ## iOS note
