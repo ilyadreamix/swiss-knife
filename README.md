@@ -30,13 +30,24 @@ A Kotlin Multiplatform library for Compose Multiplatform with a set of UI utilit
 | Platform        | Status         |
 |-----------------|----------------|
 | Android         | ✅ Supported    |
-| iOS             | 🚧 Planned     |
+| iOS             | ✅ Supported ([Note](#ios-note))    |
 | Other platforms | ❌️ Not planned |
 
 ## Examples
 
 The `examples/android` module contains a working Android app that demonstrates `SKAlert` and
 `SKBottomSheet` integrated with Material 3 theming. Run it directly from Android Studio.
+
+<a name="ios-note"></a>
+## iOS note
+
+In order to use some Swiss Knife features, you need to make changes to your `Info.plist` file:
+
+### Set `UIViewControllerBasedStatusBarAppearance` to `NO`
+Swiss Knife componentes based on SKDialogHost use `UIApplication.sharedApplication.setStatusBarStyle` method
+to ensure that status bar appearance above the dark scrim is light by default. 
+
+If you don't need this behavior, you can skip this step.
 
 ## License
 
