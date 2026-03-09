@@ -44,7 +44,7 @@ The `examples/android` module contains a working Android app that demonstrates `
 In order to use some Swiss Knife features, you need to make changes to your `Info.plist` file:
 
 ### Set `UIViewControllerBasedStatusBarAppearance` to `NO`
-Swiss Knife componentes based on SKDialogHost use `UIApplication.sharedApplication.setStatusBarStyle` method
+Swiss Knife componentes based on `SKDialogHost` use `UIApplication.sharedApplication.setStatusBarStyle` method
 to ensure that status bar appearance above the dark scrim is light by default. 
 
 If you don't need this behavior, you can skip this step.
