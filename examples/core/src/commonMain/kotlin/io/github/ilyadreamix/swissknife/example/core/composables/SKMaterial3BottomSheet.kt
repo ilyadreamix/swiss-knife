@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -34,7 +33,7 @@ internal fun SKMaterial3BottomSheet(
     insets = insets,
     container = SKBottomSheetContainer(
       maxWidth = 640.dp,
-      color = MaterialTheme.colorScheme.surfaceColorAtElevation(1.dp),
+      color = MaterialTheme.colorScheme.surfaceContainerLow,
       shape = MaterialTheme.shapes.extraLarge.copy(
         bottomStart = CornerSize(0.dp),
         bottomEnd = CornerSize(0.dp),

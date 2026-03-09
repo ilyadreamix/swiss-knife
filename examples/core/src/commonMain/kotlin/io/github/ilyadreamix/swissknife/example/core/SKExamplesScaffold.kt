@@ -82,6 +82,11 @@ fun SKExamplesScaffold() {
           onClick = { alertVisible = true },
           content = { Text(text = "Show alert") }
         )
+
+        Button(
+          onClick = { alertVisible = true; sheetVisible = true },
+          content = { Text(text = "Show both alert and bottom sheet") }
+        )
       }
     }
 

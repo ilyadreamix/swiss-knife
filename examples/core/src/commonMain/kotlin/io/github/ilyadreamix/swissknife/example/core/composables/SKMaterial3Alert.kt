@@ -5,11 +5,10 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.LocalMinimumTouchTargetEnforcement
+import androidx.compose.material3.LocalMinimumInteractiveComponentSize
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -41,7 +40,7 @@ internal fun SKMaterial3Alert(
           scaleX = lerp(0.85f, 1f, animationProgress)
           scaleY = lerp(0.85f, 1f, animationProgress)
         },
-      color = MaterialTheme.colorScheme.surfaceColorAtElevation(3.dp),
+      color = MaterialTheme.colorScheme.surfaceContainerHigh,
       shadowElevation = 6.dp,
       shape = MaterialTheme.shapes.extraLarge
     ) {
@@ -62,7 +61,7 @@ internal fun SKMaterial3Alert(
 
         Box(modifier = Modifier.align(Alignment.End)) {
           CompositionLocalProvider(
-            value = LocalMinimumTouchTargetEnforcement provides false,
+            value = LocalMinimumInteractiveComponentSize provides 0.dp,
             content = { hideButton() }
           )
         }
