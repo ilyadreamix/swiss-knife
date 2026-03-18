@@ -25,5 +25,8 @@ rootProject.name = "swiss-knife"
 
 include(":core")
 include(":dialogs")
-include(":examples:core")
-include(":examples:android")
+
+if (System.getenv("JITPACK") == null) {
+  include(":examples:core")
+  include(":examples:android")
+}

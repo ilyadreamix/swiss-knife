@@ -1,5 +1,7 @@
 jdk:
-  - openjdk17
+  - openjdk21
 before_install:
   - sdk install gradle 9.4.0
   - sdk use gradle 9.4.0
+install:
+  - ./gradlew clean assemble publishToMavenLocal --no-configuration-cache
