@@ -1,0 +1,5 @@
+jdk:
+  - openjdk17
+before_install:
+  - sdk install gradle 9.4.0
+  - sdk use gradle 9.4.0
