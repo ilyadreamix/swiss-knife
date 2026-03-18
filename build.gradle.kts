@@ -1,3 +1,6 @@
+group = "com.github.ilyadreamix"
+version = "1.0.0"
+
 plugins {
   alias(libs.plugins.kotlin.multiplatform) apply false
   alias(libs.plugins.kotlin.compose) apply false
