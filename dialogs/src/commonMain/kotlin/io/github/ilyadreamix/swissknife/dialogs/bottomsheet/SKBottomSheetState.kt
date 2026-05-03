@@ -10,14 +10,14 @@ import androidx.compose.runtime.withFrameNanos
 import io.github.ilyadreamix.swissknife.core.extensions.animate
 
 @Composable
-internal fun rememberSKBottomSheetState(
+fun rememberSKBottomSheetState(
   visible: Boolean,
   animationSpec: AnimationSpec<Float>?,
   dismissThreshold: Float
 ) = remember { SKBottomSheetState(visible, animationSpec, dismissThreshold) }
 
 @Stable
-internal class SKBottomSheetState(
+class SKBottomSheetState(
   visible: Boolean,
   private val animationSpec: AnimationSpec<Float>?,
   private val dismissThreshold: Float

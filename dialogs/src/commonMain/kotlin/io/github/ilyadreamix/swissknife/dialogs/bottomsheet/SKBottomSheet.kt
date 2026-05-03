@@ -1,17 +1,12 @@
 package io.github.ilyadreamix.swissknife.dialogs.bottomsheet
 
 import androidx.compose.animation.core.AnimationSpec
-import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
-import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.remember
@@ -19,19 +14,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.graphics.graphicsLayer
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.isSpecified
 import io.github.ilyadreamix.swissknife.core.SKInsets
 import io.github.ilyadreamix.swissknife.dialogs.SKDialogHost
 import io.github.ilyadreamix.swissknife.dialogs.SKDialogHostSystemUIOptions
-import kotlinx.coroutines.launch
 
 /**
  * Describes the reason why the bottom sheet was requested to hide.
@@ -174,7 +163,7 @@ fun SKBottomSheet(
   systemUIOptions: SKDialogHostSystemUIOptions = SKDialogHostSystemUIOptions(statusBarIconsStyle = SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light),
   content: @Composable () -> Unit
 ) {
-  val state = rememberSKBottomSheetState(visible, behavior.animationSpec, hideOptions.hideOnDragThreshold)
+  val state = rememberSKBottomSheetState(visible, behavior.animationSpec, dismissThreshold = hideOptions.hideOnDragThreshold)
   val coroutineScope = rememberCoroutineScope()
 
   val nestedScrollConnection = if (behavior.nestedScroll) {
@@ -189,8 +178,47 @@ fun SKBottomSheet(
     null
   }
 
-  val animationProgress = state.animationProgress
-  val finalScrimColor = scrimColor.copy(alpha = scrimColor.alpha * animationProgress)
+  SKBottomSheetHost(
+    state = state,
+    visible = visible,
+    onHide = onHide,
+    hideOptions = hideOptions,
+    scrimColor = scrimColor,
+    onHidden = onHidden,
+    systemUIOptions = systemUIOptions
+  ) {
+    SKBottomSheetContent(
+      content = content,
+      state = state,
+      container = container,
+      hideOptions = hideOptions,
+      insets = insets,
+      animationProgress = state.animationProgress,
+      nestedScrollConnection = nestedScrollConnection,
+      onHide = onHide,
+      modifier = Modifier.align(Alignment.BottomCenter)
+    )
+  }
+}
+
+/**
+ * This is a default low-level composable that hosts bottom sheet.
+ *
+ * You can use it to implement your own bottom sheet instead of using [SKBottomSheet].
+ */
+@Composable
+fun SKBottomSheetHost(
+  state: SKBottomSheetState,
+  visible: Boolean,
+  onHide: (SKBottomSheetHideReason) -> Unit,
+  hideOptions: SKBottomSheetHideOptions = SKBottomSheetHideOptions(),
+  scrimColor: Color = Color.Black.copy(alpha = 0.5f),
+  onHidden: (() -> Unit)? = null,
+  systemUIOptions: SKDialogHostSystemUIOptions = SKDialogHostSystemUIOptions(statusBarIconsStyle = SKDialogHostSystemUIOptions.SystemBarIconsStyle.Light),
+  content: @Composable BoxScope.() -> Unit
+) {
+
+  val finalScrimColor = scrimColor.copy(alpha = scrimColor.alpha * state.animationProgress)
 
   if (state.visible) {
     SKDialogHost(
@@ -214,68 +242,9 @@ fun SKBottomSheet(
                 onHide(SKBottomSheetHideReason.TouchOutside)
               }
             }
-          }
-      ) {
-        Box(
-          content = { content() },
-          modifier = Modifier
-            .then(
-              if (container.maxWidth.isSpecified) {
-                Modifier.widthIn(max = container.maxWidth)
-              } else {
-                Modifier.fillMaxWidth()
-              }
-            )
-            .wrapContentHeight()
-            .align(Alignment.BottomCenter)
-            .padding(
-              start = insets.start,
-              end = insets.end,
-              top = insets.top,
-            )
-            .graphicsLayer { translationY = size.height * (1f - animationProgress) }
-            .then(
-              if (container.elevation.isSpecified) {
-                Modifier.shadow(container.elevation, container.shape)
-              } else {
-                Modifier
-              }
-            )
-            .background(container.color, container.shape)
-            .onSizeChanged { state.setHeight(it.height.toFloat()) }
-            .pointerInput(Unit) {
-              detectTapGestures { /* ... */ }
-            }
-            .then(if (nestedScrollConnection != null) Modifier.nestedScroll(nestedScrollConnection) else Modifier)
-            .pointerInput(hideOptions.hideOnDrag) {
-              if (!hideOptions.hideOnDrag) {
-                return@pointerInput
-              }
-
-              detectVerticalDragGestures(
-                onDragStart = { state.onDragStart() },
-                onDragCancel = {
-                  coroutineScope.launch {
-                    state.onDragCancel()
-                  }
-                },
-                onVerticalDrag = { change, amount ->
-                  change.consume()
-                  coroutineScope.launch { state.onDrag(amount) }
-                },
-                onDragEnd = {
-                  coroutineScope.launch {
-                    val shouldHide = state.onDragEnd()
-                    if (shouldHide) {
-                      onHide(SKBottomSheetHideReason.Drag)
-                    }
-                  }
-                }
-              )
-            }
-            .padding(bottom = insets.bottom)
-        )
-      }
+          },
+        content = content
+      )
     }
   }
 
