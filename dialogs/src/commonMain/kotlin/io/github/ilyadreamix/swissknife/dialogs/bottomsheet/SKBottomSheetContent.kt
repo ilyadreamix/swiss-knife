@@ -66,7 +66,7 @@ fun SKBottomSheetContent(
         }
       )
       .background(container.color, container.shape)
-      .onSizeChanged { state.setHeight(it.height.toFloat()) }
+      .onSizeChanged { state.height = it.height.toFloat() }
       .pointerInput(Unit) {
         detectTapGestures { /* ... */ }
       }

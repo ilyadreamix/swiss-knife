@@ -29,8 +29,7 @@ class SKBottomSheetState(
   private val _animationProgress = Animatable(if (visible) 1f else 0f)
   val animationProgress get() = _animationProgress.value
 
-  private var height = 0f
-  fun setHeight(height: Float) { this.height = height }
+  var height = 0f
 
   var totalDragAmount = 0f
     private set
