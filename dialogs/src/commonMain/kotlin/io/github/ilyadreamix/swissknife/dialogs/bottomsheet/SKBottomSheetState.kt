@@ -12,8 +12,8 @@ import io.github.ilyadreamix.swissknife.core.extensions.animate
 @Composable
 fun rememberSKBottomSheetState(
   visible: Boolean,
-  animationSpec: AnimationSpec<Float>?,
-  dismissThreshold: Float
+  animationSpec: AnimationSpec<Float>? = null,
+  dismissThreshold: Float = SKBottomSheetHideOptions.DefaultHideOnDragThreshold
 ) = remember { SKBottomSheetState(visible, animationSpec, dismissThreshold) }
 
 @Stable
