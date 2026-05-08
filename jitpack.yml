@@ -4,4 +4,4 @@ before_install:
   - sdk install gradle 9.4.0
   - sdk use gradle 9.4.0
 install:
-  - ./gradlew clean assemble publishToMavenLocal --no-configuration-cache
+  - ./gradlew clean assemble publishToMavenLocal publishJvmPublicationToMavenLocal --no-configuration-cache
