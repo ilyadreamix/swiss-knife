@@ -1,14 +1,14 @@
 [versions]
-android-gradle = "9.1.0"
-kotlin = "2.3.10"
-androidx-core = "1.17.0"
-androidx-activity-compose = "1.12.4"
+android-gradle = "9.2.1"
+kotlin = "2.3.21"
+androidx-core = "1.18.0"
+androidx-activity-compose = "1.13.0"
 androidx-lifecycle = "2.10.0"
 androidx-appCompat = "1.7.1"
-app-android-sdk-compile = "36"
+app-android-sdk-compile = "37"
 app-android-sdk-min = "28"
-app-android-sdk-target = "36"
-compose = "1.10.1"
+app-android-sdk-target = "37"
+compose = "1.10.3"
 compose-material3 = "1.9.0"
 
 [libraries]

@@ -39,6 +39,9 @@ kotlin {
   iosArm64()
   iosSimulatorArm64()
 
+  jvm()
+  jvmToolchain(17)
+
   sourceSets {
     commonMain.dependencies {
       api(projects.core)
