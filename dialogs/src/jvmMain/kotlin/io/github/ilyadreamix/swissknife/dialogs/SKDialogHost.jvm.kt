@@ -1,9 +1,10 @@
 package io.github.ilyadreamix.swissknife.dialogs
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.window.Popup
-import androidx.compose.ui.window.PopupProperties
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.window.Dialog
+import androidx.compose.ui.window.DialogProperties
 
 @Composable
 actual fun SKDialogHost(
@@ -11,16 +12,16 @@ actual fun SKDialogHost(
   systemUIOptions: SKDialogHostSystemUIOptions,
   content: @Composable (() -> Unit)
 ) {
-  Popup(
-    alignment = Alignment.Center,
+  Dialog(
     onDismissRequest = { onBack() },
-    properties = PopupProperties(
-      focusable = true,
-      dismissOnBackPress = false,
+    properties = @OptIn(ExperimentalComposeUiApi::class) DialogProperties(
       dismissOnClickOutside = false,
-      clippingEnabled = false,
+      dismissOnBackPress = false,
+      useSoftwareKeyboardInset = false,
+      usePlatformInsets = false,
       usePlatformDefaultWidth = false,
-      usePlatformInsets = false
+      scrimColor = Color.Transparent,
+      animateTransition = false
     ),
     content = content
   )

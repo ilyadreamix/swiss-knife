@@ -8,7 +8,7 @@ androidx-appCompat = "1.7.1"
 app-android-sdk-compile = "37"
 app-android-sdk-min = "28"
 app-android-sdk-target = "37"
-compose = "1.10.3"
+compose = "1.11.1"
 compose-material3 = "1.9.0"
 
 [libraries]
